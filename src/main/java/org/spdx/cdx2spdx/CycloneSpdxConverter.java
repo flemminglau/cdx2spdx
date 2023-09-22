@@ -486,7 +486,12 @@ public class CycloneSpdxConverter {
 		
 		String group = component.getGroup();
 		if (Objects.nonNull(group) && !group.isBlank()) {
-			name = group + ":" + name;
+			String purl = component.getPurl();
+			if (Objects.nonNull(purl) && purl.startsWith("pkg:npm")) {
+			    name = group + "/" + name;
+			} else {
+			    name = group + ":" + name;
+			}
 		}
 
 		List<Hash> hashes = component.getHashes();
